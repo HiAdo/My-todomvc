@@ -20,6 +20,25 @@
 		el: '#todoapp',
 		data: {
 			items,
+		},
+		methods: {
+			addItem(event){
+				// console.log(event.target.value);  // 获取文本输出框的值
+				const content = event.target.value.trim()
+				if (!content.length){  // 值为空，则0，那么返回false，!则为true，直接不做处理
+					return
+				}
+				const id = items.length + 1
+				items.push(
+					{
+						id,
+						content,
+						completed: false
+					}
+				)
+				event.target.value = ""  // 输入完成后清空文本框
+
+			}
 		}
 	})
 

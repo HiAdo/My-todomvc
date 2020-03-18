@@ -15,7 +15,7 @@
 	<section class="todoapp" id="todoapp">
 		<header class="header">
 			<h1>todos</h1>
-			<input class="new-todo" placeholder="What needs to be done?" autofocus>
+			<input class="new-todo" @keyup.enter="addItem" placeholder="What needs to be done?" autofocus>
 		</header>
 		<!-- 用template标签不会渲染到页面，所以template必须配合v-if使用, 因为v-show是给标签添加隐藏属性, items.length 为0 表示 false -->
 		<template v-if="items.length">
