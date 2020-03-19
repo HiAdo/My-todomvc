@@ -41,6 +41,10 @@
 			}
 		},
 		methods: {
+			removeCompleted(){
+				// 将所有未完成的任务过滤出来赋值给items，从而清除已完成任务
+				this.items = this.items.filter(item => !item.completed)
+			},
 			addItem(event) {
 				// console.log(event.target.value);  // 获取文本输出框的值
 				const content = event.target.value.trim()

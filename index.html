@@ -52,8 +52,9 @@
 						<a href="#/completed">Completed</a>
 					</li>
 				</ul>
-				<!-- Hidden if no completed items are left ↓ -->
-				<button class="clear-completed">Clear completed</button>
+				<!-- 当所有任务数和未完成任务数不等时,说明有已完成任务,那么才显示 -->
+				<button v-show="items.length != remaining"
+				class="clear-completed" @click="removeCompleted">Clear completed</button>
 			</footer>
 		</template>
 	</section>
