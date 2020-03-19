@@ -21,6 +21,13 @@
 		data: {
 			items,
 		},
+		computed: {
+			remaining(){
+				// 过滤未完成的任务(未完成的为fase, !为true，true的才被过滤出来)
+				const unFinishItems = this.items.filter(item => !item.completed)
+				return unFinishItems.length
+			}
+		},
 		methods: {
 			addItem(event){
 				// console.log(event.target.value);  // 获取文本输出框的值
