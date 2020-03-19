@@ -56,7 +56,9 @@
 					}
 				)
 				event.target.value = ""  // 输入完成后清空文本框
-
+			},
+			removeItem(index){
+				this.items.splice(index, 1)
 			}
 		}
 	})
