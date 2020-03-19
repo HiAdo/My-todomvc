@@ -20,6 +20,7 @@
 		el: '#todoapp',
 		data: {
 			items,
+			currentItem: null,
 		},
 		computed: {
 			toggleAll: {
@@ -41,6 +42,29 @@
 			}
 		},
 		methods: {
+			finishEdit(item, index, event){
+				// 1.获取当前输入框的值
+				const content = event.target.value.trim()
+				// 2.判断输入框的值是否为空，如果为空，则移除该任务项
+				if (!content) {
+					this.removeItem(index)
+					return
+				}
+				// 3.如果不为空，则更新任务项
+				item.content = content
+				// 4.移除editing样式，退出编辑状态
+				this.currentItem = null
+
+			},
+			cancelEdit(){
+				// 当esc按下时，将currentItem赋值为null,那么editing: item === currentItem 为false，编辑框就取消
+				// 而且当前输入框的value是单向绑定，无论视图怎么改，数据都不会变
+				this.currentItem = null
+			},
+			toEdit(item){
+				// 双击label，使得currentItem由null变成item，使 item === currentItem 为true, 当为true时，editing生效，进入编辑状态
+				this.currentItem = item
+			},
 			removeCompleted(){
 				// 将所有未完成的任务过滤出来赋值给items，从而清除已完成任务
 				this.items = this.items.filter(item => !item.completed)
