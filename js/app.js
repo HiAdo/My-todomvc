@@ -1,4 +1,15 @@
 (function (Vue) {  // 表示依赖全局Vue
+	const STORAGE_KEY = "todoitems_vue"
+
+	const storageItems = {
+		fetch(){
+			return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')  // 将json格式转换为对象格式
+		},
+		save(items){
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+		}
+	}
+
 	const items = [
 		{
 			id: 1,
@@ -31,12 +42,13 @@
 	const vm = new Vue({
 		el: '#todoapp',
 		data: {
-			items,
+			// items,
+			items: storageItems.fetch(),
 			currentItem: null,
 			filterStatus: 'all',
 		},
 		computed: {
-			filterItems(){  // 当filterStatus值发生变化时，触发filterItems这个计算属性
+			filterItems() {  // 当filterStatus值发生变化时，触发filterItems这个计算属性
 				switch (this.filterStatus) {
 					case 'active':
 						return this.items.filter(item => !item.completed)
@@ -100,8 +112,8 @@
 				if (!content.length) {  // 值为空，则0，那么返回false，!则为true，直接不做处理
 					return
 				}
-				const id = items.length + 1
-				items.push(
+				const id = this.items.length + 1
+				this.items.push(
 					{
 						id,
 						content,
@@ -113,16 +125,24 @@
 			removeItem(index) {
 				this.items.splice(index, 1)
 			}
+		},
+		watch: {
+			items: {  // 监听items值，因为items是一个数组，里面的对象中的属性发生变化时，不会被监听到，所以必须传入deep:true
+				deep: true,
+				handler(newItems, oldItems) {
+					storageItems.save(newItems)
+				}
+			}
 		}
 	})
 
 	// 页面hash值发生变化时触发
-	window.onhashchange = function(){
+	window.onhashchange = function () {
 		console.log("hashChanged..current hash value:", window.location.hash);  // #/active
 		let hash = window.location.hash.substr(2) || 'all'  // 当hash为 #/ 时，index=2为空，则为 all
 		vm.filterStatus = hash
 	}
 
-  // 页面加载完成时，手动调用一次
+	// 页面加载完成时，手动调用一次
 	window.onhashchange()
 })(Vue);
