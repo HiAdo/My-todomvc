@@ -16,6 +16,16 @@
 			completed: true
 		},
 	]
+	Vue.directive('focus-app', {
+		inserted(el, binding){
+			el.focus()
+		},
+		update(el, binding){  // 与inserted不同的是，双击后数据进行了更新渲染，所以应该用update勾子
+			if(binding){  // 只有currentItem = el时，才设置为焦点
+				el.focus()
+			}
+		}
+	})
 	new Vue({
 		el: '#todoapp',
 		data: {

@@ -15,7 +15,7 @@
 	<section class="todoapp" id="todoapp">
 		<header class="header">
 			<h1>todos</h1>
-			<input class="new-todo" @keyup.enter="addItem" placeholder="What needs to be done?" autofocus>
+			<input class="new-todo" @keyup.enter="addItem" placeholder="What needs to be done?" v-focus-app>
 		</header>
 		<!-- 用template标签不会渲染到页面，所以template必须配合v-if使用, 因为v-show是给标签添加隐藏属性, items.length 为0 表示 false -->
 		<template v-if="items.length">
@@ -35,7 +35,7 @@
 						</div>
 						<!-- 当editing 属性值为true时，显示该输入框 -->
 						<input @keyup.enter="finishEdit(item, index, $event)" @blur="finishEdit(item, index, $event)"
-						class="edit" :value="item.content" @keyup.esc="cancelEdit">
+						class="edit" :value="item.content" @keyup.esc="cancelEdit" v-focus-app="item === currentItem">
 					</li>
 				</ul>
 			</section>
