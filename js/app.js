@@ -3,7 +3,8 @@
 
 	const storageItems = {
 		fetch(){
-			return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')  // 将json格式转换为对象格式
+			// 当存储的值为空时，获取一个空列表,将获取的json格式转换为对象格式
+			return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
 		},
 		save(items){
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
